@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguras en el Transporte</title>
     <link rel="stylesheet" href="assets/styles.css">
+    <!-- CDN de html5-qrcode -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head>
 <body>
 
@@ -22,3 +24,19 @@
             <!-- Otros enlaces -->
             <a class="btn" href="instrucciones.html">📘 Instrucciones</a>
             <a class="btn" href="denuncias.html">📢 Cómo denunciar</a>
+            <!-- Botón para configurar el número de emergencia -->
+            <a class="btn" href="#" onclick="configurarNumero()">📝 Configurar número de emergencia</a>
+            <!-- Botón para escanear el QR -->
+            <a class="btn" href="#" onclick="iniciarEscaneo()">📷 Escanear código QR</a>
+        </section>
+
+        <!-- Contenedor para el escáner QR -->
+        <div id="qr-scanner" style="display:none;">
+            <div id="reader" width="600px"></div>
+            <button onclick="detenerEscaneo()">Detener escaneo</button>
+        </div>
+    </main>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>

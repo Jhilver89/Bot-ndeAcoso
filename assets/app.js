@@ -20,6 +20,45 @@ function enviarAyuda() {
     window.open(url, "_blank");
 }
 
+// Función para iniciar el escaneo del QR
+function iniciarEscaneo() {
+    document.getElementById("qr-scanner").style.display = "block"; // Mostrar el contenedor del escáner
+
+    // Inicializar el escáner de QR
+    const html5QrCode = new Html5Qrcode("reader");
+    
+    html5QrCode.start(
+        { facingMode: "environment" }, // Usar la cámara trasera
+        {
+            fps: 10,    // Frecuencia de fotogramas
+            qrbox: 250  // Tamaño del área de escaneo
+        },
+        (decodedText, decodedResult) => {
+            // Aquí se maneja el código QR escaneado
+            alert("QR escaneado: " + decodedText);
+            // Guardar el número del QR (suponiendo que es un número de teléfono)
+            localStorage.setItem("numeroEmergencia", decodedText);
+            alert("Número de emergencia configurado: " + decodedText);
+            detenerEscaneo(); // Detener el escaneo después de escanear el QR
+        },
+        (errorMessage) => {
+            console.log(errorMessage); // Manejar errores
+        }
+    ).catch(err => {
+        console.error("Error al iniciar el escaneo: ", err);
+    });
+}
+
+// Función para detener el escaneo del QR
+function detenerEscaneo() {
+    document.getElementById("qr-scanner").style.display = "none"; // Ocultar el escáner
+    Html5Qrcode.getCameras().then(devices => {
+        devices && devices.length > 0 && html5QrCode.stop();
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 // Llamada para configurar el número (esto se podría hacer con un botón)
 document.addEventListener("DOMContentLoaded", () => {
     if (!localStorage.getItem("numeroEmergencia")) {
